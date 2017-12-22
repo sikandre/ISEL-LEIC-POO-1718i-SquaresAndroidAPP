@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@android:color/black"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="pt.poo.isel.squares.SquaresApp">
@@ -17,8 +18,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="30sp"
-            android:text="count"
-            />
+            android:text="count" />
     </LinearLayout>
 
 <pt.poo.isel.tile.TilePanel
@@ -28,7 +28,6 @@
     app:heightTiles="10"
     app:widthTiles="10"
     app:gridLine="0"/>
-
 
 
 

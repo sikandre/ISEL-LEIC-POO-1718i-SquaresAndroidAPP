@@ -1,12 +1,13 @@
 package pt.poo.isel.squares.model.square;
 
-import model.Squares;
+
+import pt.poo.isel.squares.model.Squares;
 
 public class ColorSquare extends Square {
 
     private int color;
 
-    ColorSquare(char type){
+    public ColorSquare(char type){
         if(type=='.')
             color = (int) (Math.random() * Squares.MAX_COLORS); //random color
         else

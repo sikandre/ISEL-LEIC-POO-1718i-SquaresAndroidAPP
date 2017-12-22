@@ -1,6 +1,7 @@
 package pt.poo.isel.squares.model.square;
 
-import model.Squares;
+
+import pt.poo.isel.squares.model.Squares;
 
 public class VerticalSquare extends Square{
 
