@@ -13,6 +13,7 @@ import pt.poo.isel.squares.View.SquareView;
 import pt.poo.isel.squares.model.Loader;
 import pt.poo.isel.squares.model.Squares;
 import pt.poo.isel.squares.model.square.*;
+import pt.poo.isel.tile.Tile;
 import pt.poo.isel.tile.TilePanel;
 
 public class SquaresApp extends Activity {
@@ -29,11 +30,28 @@ public class SquaresApp extends Activity {
         setContentView(R.layout.activity_squares);
 
         grid = findViewById(R.id.grid);
+        
+        initBoard();
 
-        grid.setTile(2,2,new SquareView(new ColorSquare('.')));
+        //grid.setTile(2,2,new SquareView(new ColorSquare('.')));
 
     }
 
+    private void initBoard() {
+        int height = grid.getHeightInTiles();
+        int width = grid.getWidthInTiles();
+        //Tile [][] t = model.grid //todo
+        //grid.setAllTiles();
+        int lvl = 0;
+        loadLevel(++lvl);
+        for (int line = 0; line < height; line++) {
+            for (int col = 0; col < width; col++) {
+                grid.setTile(line,col,new SquareView(model.getSquare(line,col)));
+            }
+            
+        }
+
+    }
 
 
     private boolean loadLevel(int n) {
