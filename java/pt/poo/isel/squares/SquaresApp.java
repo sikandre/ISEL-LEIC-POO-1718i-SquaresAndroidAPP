@@ -11,6 +11,7 @@ public class SquaresApp extends Activity {
     private TilePanel grid;
     private Squares model = new Squares(5);//todo moves???
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
