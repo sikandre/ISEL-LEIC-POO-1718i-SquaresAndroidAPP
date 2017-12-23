@@ -17,7 +17,9 @@ import pt.poo.isel.squares.View.SquareView;
 import pt.poo.isel.squares.model.Loader;
 import pt.poo.isel.squares.model.Squares;
 import pt.poo.isel.squares.model.square.Square;
+import pt.poo.isel.tile.Animator;
 import pt.poo.isel.tile.OnTileTouchListener;
+import pt.poo.isel.tile.Tile;
 import pt.poo.isel.tile.TilePanel;
 
 public class SquaresApp extends Activity {
@@ -28,6 +30,7 @@ public class SquaresApp extends Activity {
     private TilePanel goals;
     private Squares model;
     private Squares.Listener listener;
+    private Animator anim;
 
 
     @Override
@@ -38,6 +41,7 @@ public class SquaresApp extends Activity {
         grid = findViewById(R.id.grid);
         moves = findViewById(R.id.moves);
         goals = findViewById(R.id.goals);
+        anim = grid.getAnimator();
 
         initBoard();
         play();
@@ -52,6 +56,8 @@ public class SquaresApp extends Activity {
 
             @Override
             public void notifyMove(Square s, int lFrom, int c, int lTo) {
+                anim.floatTile(c,lFrom,c,lTo,500);
+
             }
 
             @Override
