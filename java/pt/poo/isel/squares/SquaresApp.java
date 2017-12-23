@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,6 +16,8 @@ import java.util.Scanner;
 import pt.poo.isel.squares.View.SquareView;
 import pt.poo.isel.squares.model.Loader;
 import pt.poo.isel.squares.model.Squares;
+import pt.poo.isel.squares.model.square.Square;
+import pt.poo.isel.tile.OnTileTouchListener;
 import pt.poo.isel.tile.TilePanel;
 
 public class SquaresApp extends Activity {
@@ -37,6 +40,62 @@ public class SquaresApp extends Activity {
         goals = findViewById(R.id.goals);
 
         initBoard();
+        play();
+
+
+
+        model.setListener(new Squares.Listener() {
+            @Override
+            public void notifyDelete(Square s, int l, int c) {
+                grid.setTile(c,l,null);
+            }
+
+            @Override
+            public void notifyMove(Square s, int lFrom, int c, int lTo) {
+            }
+
+            @Override
+            public void notifyNew(Square s, int l, int c) {
+
+            }
+
+            @Override
+            public void notifyPut(Square s, int l, int c) {
+                grid.setTile(l,c, new SquareView(s));
+            }
+        });
+
+
+
+    }
+
+    private void play() {
+        grid.setListener(new OnTileTouchListener() {
+            @Override
+            public boolean onClick(int xTile, int yTile) {
+                message("Click on "+yTile+","+xTile);
+                //grid.setTile(xTile,yTile,null);
+                return model.touch(yTile,xTile);
+                //return true;
+
+            }
+
+            @Override
+            public boolean onDrag(int xFrom, int yFrom, int xTo, int yTo) {
+                return false;
+            }
+
+            @Override
+            public void onDragEnd(int x, int y) {
+
+            }
+
+            @Override
+            public void onDragCancel() {
+
+            }
+        });
+
 
     }
 
@@ -52,11 +111,9 @@ public class SquaresApp extends Activity {
         setGoals();
         for (int line = 0; line < height; line++) {
             for (int col = 0; col < width; col++) {
-                grid.setTile(line,col,new SquareView(model.getSquare(line,col)));
+                grid.setTile(col, line, new SquareView(model.getSquare(line, col)));
             }
-            
         }
-
     }
 
     private void setGoals() {
@@ -97,4 +154,7 @@ public class SquaresApp extends Activity {
         }
     }
 
+    private void message(String txt) {
+        Toast.makeText(this,txt,Toast.LENGTH_LONG).show();
+    }
 }
