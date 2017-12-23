@@ -19,7 +19,7 @@ public class SquareView implements Tile {
 
     static final int[] COLORS = {
             Color.RED, Color.GREEN, Color.BLUE,
-            Color.YELLOW, Color.MAGENTA, Color.WHITE
+            Color.YELLOW, Color.MAGENTA, Color.CYAN
     };
 
     public SquareView(Square square) {
@@ -31,8 +31,8 @@ public class SquareView implements Tile {
     @Override
     public void draw(@NonNull Canvas canvas, int side) {
         paint.setColor(color);
-        canvas.drawRect(0,0,side,side,paint);
-        //canvas.drawCircle(side/2,side/2,side*3/8,paint);
+        RectF r = new RectF(0, 0, side, side);
+        canvas.drawRoundRect(r,32,32, paint);
     }
 
     @Override

@@ -3,6 +3,9 @@ package pt.poo.isel.squares;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.TextView;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,14 +15,14 @@ import java.util.Scanner;
 import pt.poo.isel.squares.View.SquareView;
 import pt.poo.isel.squares.model.Loader;
 import pt.poo.isel.squares.model.Squares;
-import pt.poo.isel.squares.model.square.*;
-import pt.poo.isel.tile.Tile;
 import pt.poo.isel.tile.TilePanel;
 
 public class SquaresApp extends Activity {
 
     public static final String LEVELS_FILE = "Levels.txt";
     private TilePanel grid;
+    private TextView moves;
+    private TilePanel goals;
     private Squares model;
     private Squares.Listener listener;
 
@@ -30,26 +33,43 @@ public class SquaresApp extends Activity {
         setContentView(R.layout.activity_squares);
 
         grid = findViewById(R.id.grid);
-        
-        initBoard();
+        moves = findViewById(R.id.moves);
+        goals = findViewById(R.id.goals);
 
-        //grid.setTile(2,2,new SquareView(new ColorSquare('.')));
+        initBoard();
 
     }
 
     private void initBoard() {
         int height = grid.getHeightInTiles();
         int width = grid.getWidthInTiles();
+
         //Tile [][] t = model.grid //todo
         //grid.setAllTiles();
         int lvl = 0;
         loadLevel(++lvl);
+        updateMoves();
+        setGoals();
         for (int line = 0; line < height; line++) {
             for (int col = 0; col < width; col++) {
                 grid.setTile(line,col,new SquareView(model.getSquare(line,col)));
             }
             
         }
+
+    }
+
+    private void setGoals() {
+        int numGoals=model.getNumGoals();
+        goals.setSize(numGoals,1);
+        for (int i = 0; i < numGoals; i++) {
+            goals.setTile(i,0,new SquareView(model.getGoal(i).square));
+
+        }
+    }
+
+    private void updateMoves() {
+        moves.setText(""+model.getTotalMoves());
 
     }
 
