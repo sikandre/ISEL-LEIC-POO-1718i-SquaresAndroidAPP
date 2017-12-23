@@ -62,6 +62,7 @@ public class SquaresApp extends Activity {
 
             @Override
             public void notifyNew(Square s, int l, int c) {
+                anim.entryTile(c,-1,c,l,1000, new SquareView(s));
 
             }
 
