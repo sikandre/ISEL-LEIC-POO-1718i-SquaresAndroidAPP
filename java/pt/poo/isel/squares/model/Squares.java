@@ -122,7 +122,7 @@ public class Squares {
 
 
     public void destroySquare(int line, int col) {
-        specialSquareIsSelected(); // verify if any special Square is selected to make that special move
+        //specialSquareIsSelected(); // verify if any special Square is selected to make that special move
         Square s = grid[line][col];
         for (int l = grid.length - 1; l >= 0; l--) {
             for (int c = grid[l].length - 1; c >= 0; c--) {
