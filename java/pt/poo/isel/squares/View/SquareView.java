@@ -42,17 +42,16 @@ public abstract class SquareView implements Tile {
         if (square instanceof VerticalSquare) return new VerticalTile(square);
 
         return null;
+    }
 
+    int getColor() {
+        int color = square.getColor();
+        return color==Square.NO_COLOR ? Color.BLACK : COLORS[ color ];
     }
 
 
     @Override
-    public void draw(@NonNull Canvas canvas, int side) {
-        /*color = COLORS[square.getColor()];
-        paint.setColor(color);
-        RectF r = new RectF(0, 0, side, side);
-        canvas.drawRoundRect(r,32,32, paint);*/
-    }
+    public abstract void draw(@NonNull Canvas canvas, int side);
 
     @Override
     public boolean setSelect(boolean selected) {

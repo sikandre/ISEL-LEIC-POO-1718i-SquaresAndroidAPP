@@ -18,32 +18,31 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
+            android:gravity="bottom"
             android:orientation="vertical">
 
             <TextView
-                android:text="Moves"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
+                android:text="Moves"
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/moves"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_blue_light"
-                />
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/goals"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_margin="10dp"
-            >
+            android:orientation="horizontal">
 
             <!--<pt.poo.isel.tile.TilePanel
                 android:id="@+id/goals"

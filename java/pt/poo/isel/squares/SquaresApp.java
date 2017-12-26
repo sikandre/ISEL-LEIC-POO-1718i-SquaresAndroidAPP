@@ -3,21 +3,14 @@ package pt.poo.isel.squares;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import pt.poo.isel.squares.View.GoalView;
 import pt.poo.isel.squares.View.SquareView;
 import pt.poo.isel.squares.model.Loader;
@@ -25,11 +18,7 @@ import pt.poo.isel.squares.model.Squares;
 import pt.poo.isel.squares.model.square.Square;
 import pt.poo.isel.tile.Animator;
 import pt.poo.isel.tile.OnTileTouchListener;
-import pt.poo.isel.tile.Tile;
 import pt.poo.isel.tile.TilePanel;
-
-import static pt.poo.isel.squares.R.drawable.up_down;
-
 
 
 public class SquaresApp extends Activity {
@@ -37,11 +26,10 @@ public class SquaresApp extends Activity {
     public static final String LEVELS_FILE = "Levels.txt";
     private TilePanel grid;
     private TextView moves;
-    private TilePanel goals;
+    private LinearLayout goals;
     private Squares model;
     private Squares.Listener listener;
     private Animator anim;
-    private GoalView goalView;
 
 
     private static Context ctx;
@@ -55,7 +43,7 @@ public class SquaresApp extends Activity {
 
         grid = findViewById(R.id.grid);
         moves = findViewById(R.id.moves);
-        //goals = findViewById(R.id.goals);
+        goals = findViewById(R.id.goals);
         anim = grid.getAnimator();
 
 
@@ -101,9 +89,7 @@ public class SquaresApp extends Activity {
                 @Override
                 public boolean onClick(int xTile, int yTile) {
                     message("Click on " + yTile + "," + xTile);
-                    //grid.setTile(xTile,yTile,null);
                     return model.touch(yTile, xTile);
-                    //return true;
 
                 }
 
@@ -131,7 +117,7 @@ public class SquaresApp extends Activity {
             int lvl = 0;
             loadLevel(++lvl);
             updateMoves();
-            //setGoals();
+            setGoals();
             for (int line = 0; line < height; line++) {
                 for (int col = 0; col < width; col++) {
                     grid.setTile(col, line, SquareView.newInstance(model.getSquare(line, col)));
@@ -141,15 +127,26 @@ public class SquaresApp extends Activity {
 
         private void setGoals() {
             int numGoals = model.getNumGoals();
-            //int goal;
-            //goals.setSize(numGoals, 1);
             for (int i = 0; i < numGoals; i++) {
-                goalView.setGoal(model.getGoal(i));
-
+                GoalView g = new GoalView(this, model.getGoal(i));
+                goals.addView(g);
             }
+
+            //goals.addView(goalView);
+
+            /*goalView= new GoalView(this,model.getGoal(0))  ;
+
+            *//* {
+             goals.addView(new GoalView(ctx, model.getGoal(i)));*//*
+            goals.addView(goalView);*/
+
+
+
+
         }
 
-        private void updateMoves() {
+
+    private void updateMoves() {
             moves.setText("" + model.getTotalMoves());
 
         }

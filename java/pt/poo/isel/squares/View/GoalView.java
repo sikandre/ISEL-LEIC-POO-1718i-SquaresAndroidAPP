@@ -1,46 +1,44 @@
 package pt.poo.isel.squares.View;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.support.annotation.NonNull;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pt.poo.isel.squares.R;
 import pt.poo.isel.squares.model.Squares;
 import pt.poo.isel.squares.model.square.Square;
+import pt.poo.isel.tile.Tile;
 import pt.poo.isel.tile.TileView;
 
 public class GoalView extends LinearLayout {
-    TileView goalSquare;
+    SquareView square;
     TextView remainGoal;
-    private LinearLayout goals;
+    Paint paint= new Paint();
 
-    private static int numGoals;
-    private Squares square;
-
-    public GoalView(Context context) {
+    public GoalView(Context context, Squares.Goal g) {
         super(context);
-        goals=findViewById(R.id.goals);
+        remainGoal=new TextView(getContext());
+        //square=SquareView.newInstance(g.square);
+        remainGoal.setTextSize(20);
+        remainGoal.setBackgroundColor(Color.BLUE);
+        remainGoal.setText(" "+g.number+" ");
+        addView(remainGoal);
+        //SquareView.newInstance(g.square);
     }
 
-
-    public void setGoal(Squares.Goal goal) {
-        numGoals = goal.number;
-        goals.addView(remainGoal);
-
-    }
-
-
-
-
+/*
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        remainGoal.setText(""+numGoals);
-    }
-
-    /*goals.setSize(numGoals, 1);
-            for (int i = 0; i < numGoals; i++) {
-        goals.setTile(i, 0, SquareView.newInstance((model.getGoal(i).square)));*/
-
+        int color = square.getColor();
+        paint.setColor(color);
+        //RectF r = new RectF(0, 0, , side);
+        //canvas.drawRoundRect(r,32,32, paint);
+    }*/
 }
