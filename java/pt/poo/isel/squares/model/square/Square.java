@@ -1,6 +1,8 @@
 package pt.poo.isel.squares.model.square;
 
 
+import android.content.Context;
+
 import pt.poo.isel.squares.model.Squares;
 
 public abstract class Square {

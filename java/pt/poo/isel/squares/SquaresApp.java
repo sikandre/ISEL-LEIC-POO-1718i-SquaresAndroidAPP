@@ -1,7 +1,11 @@
 package pt.poo.isel.squares;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -14,6 +18,7 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import pt.poo.isel.squares.View.GoalView;
 import pt.poo.isel.squares.View.SquareView;
 import pt.poo.isel.squares.model.Loader;
 import pt.poo.isel.squares.model.Squares;
@@ -22,6 +27,10 @@ import pt.poo.isel.tile.Animator;
 import pt.poo.isel.tile.OnTileTouchListener;
 import pt.poo.isel.tile.Tile;
 import pt.poo.isel.tile.TilePanel;
+
+import static pt.poo.isel.squares.R.drawable.up_down;
+
+
 
 public class SquaresApp extends Activity {
 
@@ -32,20 +41,27 @@ public class SquaresApp extends Activity {
     private Squares model;
     private Squares.Listener listener;
     private Animator anim;
+    private GoalView goalView;
 
+
+    private static Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_squares);
 
+        ctx=this;
+
         grid = findViewById(R.id.grid);
         moves = findViewById(R.id.moves);
-        goals = findViewById(R.id.goals);
+        //goals = findViewById(R.id.goals);
         anim = grid.getAnimator();
+
 
         initBoard();
         play();
+
 
 
         model.setListener(new Squares.Listener() {
@@ -67,7 +83,7 @@ public class SquaresApp extends Activity {
 
             @Override
             public void notifyPut(Square s, int l, int c) {
-                grid.setTile(l, c, SquareView.newInstance(s));
+                grid.setTile(c, l, SquareView.newInstance(s));
             }
         });
     }
@@ -106,20 +122,16 @@ public class SquaresApp extends Activity {
 
                 }
             });
-
-
         }
 
         private void initBoard() {
             int height = grid.getHeightInTiles();
             int width = grid.getWidthInTiles();
 
-            //Tile [][] t = model.grid //todo
-            //grid.setAllTiles();
             int lvl = 0;
             loadLevel(++lvl);
             updateMoves();
-            setGoals();
+            //setGoals();
             for (int line = 0; line < height; line++) {
                 for (int col = 0; col < width; col++) {
                     grid.setTile(col, line, SquareView.newInstance(model.getSquare(line, col)));
@@ -129,9 +141,10 @@ public class SquaresApp extends Activity {
 
         private void setGoals() {
             int numGoals = model.getNumGoals();
-            goals.setSize(numGoals, 1);
+            //int goal;
+            //goals.setSize(numGoals, 1);
             for (int i = 0; i < numGoals; i++) {
-                goals.setTile(i, 0, SquareView.newInstance((model.getGoal(i).square)));
+                goalView.setGoal(model.getGoal(i));
 
             }
         }
@@ -164,11 +177,19 @@ public class SquaresApp extends Activity {
                 if (in != null) in.close();   // Close the file
             }
         }
-
-
         private void message(String txt) {
             Toast.makeText(this, txt, Toast.LENGTH_LONG).show();
         }
-    }
+
+        public static Context getCtx(){
+            return ctx;
+        }
+
+
+
+
+}
+
+
 
 

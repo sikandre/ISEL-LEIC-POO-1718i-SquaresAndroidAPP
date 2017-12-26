@@ -38,13 +38,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/goals"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_margin="10dp"
             >
 
-            <pt.poo.isel.tile.TilePanel
+            <!--<pt.poo.isel.tile.TilePanel
                 android:id="@+id/goals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,7 +53,7 @@
                 app:widthTiles="10" />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" />-->
         </LinearLayout>
 
 
