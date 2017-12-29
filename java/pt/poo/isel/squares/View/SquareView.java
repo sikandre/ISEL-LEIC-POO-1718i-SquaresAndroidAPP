@@ -30,9 +30,7 @@ public abstract class SquareView implements Tile {
 
 
     public static SquareView newInstance(Square square) {
-        //creation of all types of squares
-        /*
-        ;*/
+
         if (square instanceof jokerSquare) return new jokerTile(square);
         if (square instanceof ColorSquare) return new ColorTile(square);
         if (square instanceof HorizotalSquare) return new HorizontalTile(square);
@@ -40,7 +38,6 @@ public abstract class SquareView implements Tile {
         if (square instanceof ColorSquare) return new ColorTile(square);
         if (square instanceof BombSquare) return new BombTile(square);
         if (square instanceof VerticalSquare) return new VerticalTile(square);
-
         return null;
     }
 

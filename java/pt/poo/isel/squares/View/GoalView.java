@@ -1,62 +1,47 @@
 package pt.poo.isel.squares.View;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.support.annotation.NonNull;
+import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import pt.poo.isel.squares.R;
 import pt.poo.isel.squares.model.Squares;
 import pt.poo.isel.squares.model.square.Square;
-import pt.poo.isel.tile.Tile;
 import pt.poo.isel.tile.TileView;
 
-public class GoalView extends LinearLayout implements Tile {
+public class GoalView extends LinearLayout {
+    public static final int HOLO_BLUE = 0xff33b5e5;
     TileView square;
     TextView remainGoal;
-    Paint paint= new Paint();
     Square s;
+    LinearLayout ln;
 
     public GoalView(Context context, Squares.Goal g) {
         super(context);
-        s=g.square;
+        ln = new LinearLayout(getContext());
+        setOrientation(VERTICAL);
+        //setDividerPadding(300);
+
+
+        s = g.square;
         remainGoal=new TextView(getContext());
-        TileView square = new TileView(getContext());
+        square = new TileView(getContext());
         square.setTile(SquareView.newInstance(s));
-        //square=SquareView.newInstance(g.square);
         remainGoal.setTextSize(20);
-        remainGoal.setBackgroundColor(Color.BLUE);
+        remainGoal.setBackgroundColor(HOLO_BLUE);
         remainGoal.setText(" "+g.number+" ");
-        addView(remainGoal);
-        addView(square);
-        //SquareView.newInstance(g.square);
+        remainGoal.setGravity(Gravity.TOP|Gravity.CENTER);
+
+        LayoutParams params = new LayoutParams(93,93);
+        params.setMargins(0,0,16,0);
+
+        addView(square,params);
+        //params=new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        addView(remainGoal,params);
     }
 
-    @Override
-    public void draw(@NonNull Canvas canvas, int side) {
-        int color = s.getColor();
-        paint.setColor(color);
-        RectF r = new RectF(0, 0, side, side);
-        canvas.drawRoundRect(r,32,32, paint);
+    public void setRemainGoal(Squares.Goal goal) {
+        remainGoal.setText(""+goal.number);
     }
-
-    @Override
-    public boolean setSelect(boolean selected) {
-        return false;
-    }
-
-/*
-    @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        int color = square.getColor();
-        paint.setColor(color);
-        //RectF r = new RectF(0, 0, , side);
-        //canvas.drawRoundRect(r,32,32, paint);
-    }*/
 }
