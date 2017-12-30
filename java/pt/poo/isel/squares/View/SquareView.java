@@ -46,7 +46,6 @@ public abstract class SquareView implements Tile {
         return color==Square.NO_COLOR ? Color.BLACK : COLORS[ color ];
     }
 
-
     @Override
     public abstract void draw(@NonNull Canvas canvas, int side);
 

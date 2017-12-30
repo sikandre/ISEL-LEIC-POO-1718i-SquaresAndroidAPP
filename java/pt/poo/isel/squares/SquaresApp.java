@@ -1,9 +1,12 @@
 package pt.poo.isel.squares;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +36,6 @@ public class SquaresApp extends Activity {
 
     private GoalView[] g;
 
-
-
     private static Context ctx;
 
     @Override
@@ -51,7 +52,7 @@ public class SquaresApp extends Activity {
 
         initBoard();
     }
-    
+
     private class ModelListener implements Squares.Listener {
         //private boolean delete;
         //private void waitToShow() { if (delete) { Console.sleep(250); delete=false; } }
@@ -77,10 +78,9 @@ public class SquaresApp extends Activity {
     private Runnable action = new Runnable() {
         @Override
         public void run() {
-            initBoard();
+            grid.postDelayed(action, 1500);
 
         }
-
     };
 
     private void play() {
@@ -91,11 +91,15 @@ public class SquaresApp extends Activity {
                     updateMoves(model.getTotalMoves());
                     updateGoals();
                     if (model.isOver()) {
-                        grid.postDelayed(action, 1500);
-                    }
+                        if(!winGame()){
+                            message("You Lost");
+                            finish();
+                        }
+                        else
+                            continueGame();
 
+                    }
                 }
-                //todo dialog box
                 return true;
             }
 
@@ -107,14 +111,28 @@ public class SquaresApp extends Activity {
 
             @Override
             public void onDragEnd(int x, int y) {
-
             }
 
             @Override
             public void onDragCancel() {
-
             }
         });
+    }
+
+    private void continueGame() {
+        final EditText contGame = new EditText(this);
+        new AlertDialog.Builder(this)
+                .setTitle("Continue Game")
+                .setNegativeButton("No",(DialogInterface,i)->{
+                    message("Bye");
+                    finish();
+                })
+                .setPositiveButton("Yes",(DialogInterface,i)->{
+                    message("Next Level");
+                    grid.postDelayed(action, 1500);
+                    initBoard();
+                })
+                .setView(contGame).show();
     }
 
 
@@ -127,17 +145,17 @@ public class SquaresApp extends Activity {
         int height = grid.getHeightInTiles();
         int width = grid.getWidthInTiles();
 
-        loadLevel(++level);
+        if(!loadLevel(++level)) {
+            message("No More Levels");
+            finish();
+        }
         updateMoves(model.getTotalMoves());
         setGoals();
 
         //init visual board
-        for (int line = 0; line < height; line++) {
-            for (int col = 0; col < width; col++) {
+        for (int line = 0; line < height; line++)
+            for (int col = 0; col < width; col++)
                 grid.setTile(col, line, SquareView.newInstance(model.getSquare(line, col)));
-
-            }
-        }
         play();
     }
 
@@ -193,8 +211,3 @@ public class SquaresApp extends Activity {
         return ctx;
     }
 }
-
-
-
-
-
