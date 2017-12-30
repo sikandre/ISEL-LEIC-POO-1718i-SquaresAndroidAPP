@@ -3,10 +3,8 @@ package pt.poo.isel.squares;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,8 +52,6 @@ public class SquaresApp extends Activity {
     }
 
     private class ModelListener implements Squares.Listener {
-        //private boolean delete;
-        //private void waitToShow() { if (delete) { Console.sleep(250); delete=false; } }
         @Override
         public void notifyDelete(Square s, int l, int c) {
             anim.shrinkTile(c,l,500,null);
@@ -79,7 +75,6 @@ public class SquaresApp extends Activity {
         @Override
         public void run() {
             grid.postDelayed(action, 1500);
-
         }
     };
 
@@ -92,12 +87,10 @@ public class SquaresApp extends Activity {
                     updateGoals();
                     if (model.isOver()) {
                         if(!winGame()){
-                            message("You Lost");
-                            finish();
+                            gameOver("You lost");
                         }
                         else
                             continueGame();
-
                     }
                 }
                 return true;
@@ -119,20 +112,31 @@ public class SquaresApp extends Activity {
         });
     }
 
+    private void gameOver(String txt) {
+        new AlertDialog.Builder(this,2)
+                .setCancelable(false)
+                .setTitle("Game Over")
+                .setMessage(txt)
+                .setPositiveButton("Ok", (DialogInterface,i)->{
+                    finish();
+                })
+                .show();
+    }
+
     private void continueGame() {
-        final EditText contGame = new EditText(this);
-        new AlertDialog.Builder(this)
+        //final EditText contGame = new EditText(this);
+        new AlertDialog.Builder(this,2)
                 .setTitle("Continue Game")
+                .setCancelable(false)
+                .setPositiveButton("Yes",(DialogInterface,i)->{
+                    grid.postDelayed(action, 1500);
+                    initBoard();
+                })
                 .setNegativeButton("No",(DialogInterface,i)->{
                     message("Bye");
                     finish();
                 })
-                .setPositiveButton("Yes",(DialogInterface,i)->{
-                    message("Next Level");
-                    grid.postDelayed(action, 1500);
-                    initBoard();
-                })
-                .setView(contGame).show();
+                .show();
     }
 
 
@@ -146,8 +150,7 @@ public class SquaresApp extends Activity {
         int width = grid.getWidthInTiles();
 
         if(!loadLevel(++level)) {
-            message("No More Levels");
-            finish();
+            gameOver("no more levels");
         }
         updateMoves(model.getTotalMoves());
         setGoals();
