@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context="pt.poo.isel.squares.SquaresApp">
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -39,16 +39,6 @@
                 android:textSize="28sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/goals"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:gravity="bottom"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
 
     </LinearLayout>
 
@@ -60,6 +50,15 @@
         app:gridLine="0"
         app:heightTiles="10"
         app:widthTiles="10" />
+
+    <LinearLayout
+        android:id="@+id/goals"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
 
 
 </LinearLayout>

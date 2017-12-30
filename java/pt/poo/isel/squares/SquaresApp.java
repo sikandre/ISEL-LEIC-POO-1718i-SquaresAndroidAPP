@@ -25,7 +25,7 @@ import pt.poo.isel.tile.TilePanel;
 public class SquaresApp extends Activity {
 
     public static final String LEVELS_FILE = "Levels.txt";
-    private static int level=0;
+    private static int level;
     private TilePanel grid;
     private TextView moves;
     private LinearLayout goals;
@@ -48,6 +48,7 @@ public class SquaresApp extends Activity {
         goals = findViewById(R.id.goals);
         anim = grid.getAnimator();
 
+        level=0;
         initBoard();
     }
 
@@ -96,7 +97,6 @@ public class SquaresApp extends Activity {
                 return true;
             }
 
-
             @Override
             public boolean onDrag(int xFrom, int yFrom, int xTo, int yTo) {
                 return false;
@@ -124,7 +124,6 @@ public class SquaresApp extends Activity {
     }
 
     private void continueGame() {
-        //final EditText contGame = new EditText(this);
         new AlertDialog.Builder(this,2)
                 .setTitle("Continue Game")
                 .setCancelable(false)
@@ -138,7 +137,6 @@ public class SquaresApp extends Activity {
                 })
                 .show();
     }
-
 
     private void updateGoals () {
         for (int i = 0; i < model.getNumGoals(); i++)
@@ -209,6 +207,7 @@ public class SquaresApp extends Activity {
     private void message (String txt){
         Toast.makeText(this, txt, Toast.LENGTH_LONG).show();
     }
+
 
     public static Context getCtx () {
         return ctx;
