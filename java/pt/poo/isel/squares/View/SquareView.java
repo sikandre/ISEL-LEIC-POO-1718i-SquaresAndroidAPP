@@ -35,7 +35,6 @@ public abstract class SquareView implements Tile {
         if (square instanceof ColorSquare) return new ColorTile(square);
         if (square instanceof HorizotalSquare) return new HorizontalTile(square);
         if (square instanceof EmptySquare) return new EmptyTile(square);
-        if (square instanceof ColorSquare) return new ColorTile(square);
         if (square instanceof BombSquare) return new BombTile(square);
         if (square instanceof VerticalSquare) return new VerticalTile(square);
         return null;

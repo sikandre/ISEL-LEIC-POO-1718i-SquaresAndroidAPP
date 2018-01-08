@@ -5,9 +5,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -20,6 +24,8 @@ import pt.poo.isel.squares.model.square.Square;
 import pt.poo.isel.tile.Animator;
 import pt.poo.isel.tile.OnTileTouchListener;
 import pt.poo.isel.tile.TilePanel;
+
+import static android.content.ContentValues.TAG;
 
 
 public class SquaresApp extends Activity {
@@ -211,5 +217,42 @@ public class SquaresApp extends Activity {
 
     public static Context getCtx () {
         return ctx;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"onDestroy()");
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+
+
+        ByteArrayInputStream in = new ByteArrayInputStream(state.getByteArray("model"));
+        model.load(in);
+        updateMoves(model.getTotalMoves());
+        setGoals();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+           /* try {*/
+                model.save(out);
+            /*} catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }*/
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        state.putByteArray("model",out.toByteArray());
+
+
     }
 }

@@ -1,9 +1,18 @@
 package pt.poo.isel.squares.model;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
+import pt.poo.isel.squares.model.square.BombSquare;
+import pt.poo.isel.squares.model.square.ColorSquare;
+import pt.poo.isel.squares.model.square.EmptySquare;
+import pt.poo.isel.squares.model.square.HorizotalSquare;
 import pt.poo.isel.squares.model.square.Square;
+import pt.poo.isel.squares.model.square.VerticalSquare;
+import pt.poo.isel.squares.model.square.jokerSquare;
 
 public class Squares {
     public static final int MAX_COLORS = 6;
@@ -40,11 +49,7 @@ public class Squares {
             square = s;
             number = num;
         }
-
-        //boolean equals(Goal g) {return square.equals(g);} not used
     }
-
-
 
     private ArrayList<Goal> goals = new ArrayList<>(MAX_GOALS);
 
@@ -82,7 +87,6 @@ public class Squares {
                             if (listener != null)
                                 listener.notifyMove(grid[l][c],line,c,l);
                             break;//break to make only one change
-
                         }
                 }
             }
@@ -115,7 +119,6 @@ public class Squares {
             if (!(s.isSpecial()) && g.number > 0 && s.getColor() == g.square.getColor()){
                 goals.set(i, g);
                 g.number--;
-
             }
         }
     }
@@ -144,7 +147,6 @@ public class Squares {
                 Square s = grid[l][c];
                 if(s.isSelected() && s.isSpecial())
                     s.checkAroundSquares(l, c);// polimorfism. call diferrent square
-
             }
     }
 
@@ -159,6 +161,71 @@ public class Squares {
                         listener.notifyNew(s,j,i);
 
                 }
+            }
+        }
+    }
+
+
+    //----------------------------------------------------------------------------//
+    //----------------------------Android Save State------------------------------//
+
+
+    public void save(OutputStream out) throws IOException, ClassNotFoundException {
+
+        out.write(getNumGoals());
+        for (int i = 0; i < getNumGoals(); ++i) {
+            out.write(goals.get(i).square.getColor());
+            out.write(goals.get(i).number);
+        }
+
+        out.write(getTotalMoves());
+
+        byte [] array = new byte[HEIGHT*WIDTH];
+        int idx = 0;
+        for (int i = 0; i < WIDTH; i++) {
+            for (int j = 0; j < HEIGHT ; j++) {
+                Square s = grid[i][j];
+                if (idx < array.length) {
+                    if(s.getClass().equals(HorizotalSquare.class)) array[idx] = 'H';
+                    if(s.getClass().equals(VerticalSquare.class)) array[idx] = 'V';
+                    if(s.getClass().equals(BombSquare.class)) array[idx] = 'B';
+                    if(s.getClass().equals(EmptySquare.class)) array[idx] = 'X';
+                    if(s.getClass().equals(jokerSquare.class)) array[idx] = 'J';
+                    if(s.getClass().equals(ColorSquare.class)) array[idx] = (byte)s.getColor();
+
+                    idx++;
+                }
+            }
+        }
+        out.write(array);
+    }
+
+    //--------------Load State---------------
+    public void load(ByteArrayInputStream in) {
+        int size = in.read();
+        goals = new ArrayList<>(size);
+        for (int i = 0; i < size; ++i) {
+            int color = in.read();
+            Square s = new ColorSquare((char) (color+'1'));
+            int number = in.read();
+            Goal g = new Goal(s, number);
+            goals.add(g);
+        }
+
+        totalMoves=(in.read());
+
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                int color = in.read();
+                char type;
+                if(color>=0 && color<10)
+                    type = (char) (color+'1');
+                else
+                    type= (char)(color);
+
+                putSquare(Square.newInstance(type), i, j);
+                listener.notifyPut(grid[i][j],i,j);
+
             }
         }
     }

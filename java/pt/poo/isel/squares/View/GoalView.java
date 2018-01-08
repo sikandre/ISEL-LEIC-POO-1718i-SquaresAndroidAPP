@@ -15,7 +15,7 @@ import pt.poo.isel.squares.model.square.Square;
 import pt.poo.isel.tile.Tile;
 import pt.poo.isel.tile.TileView;
 
-public class GoalView extends LinearLayout implements Tile {
+public class GoalView extends LinearLayout {
     public static final int HOLO_BLUE = 0xff33b5e5;
     TileView square;
     TextView remainGoal;
@@ -23,14 +23,8 @@ public class GoalView extends LinearLayout implements Tile {
 
     public GoalView(Context context, Squares.Goal g) {
         super(context);
-/*
-        int ori SquaresApp.getGoalOrientation();
-*/
 
-
-        int ori=SquaresApp.getCtx().getResources().getConfiguration().orientation;
-
-        if(ori==VERTICAL)
+        if(SquaresApp.getCtx().getResources().getConfiguration().orientation==VERTICAL)
             setOrientation(VERTICAL);
 
         s = g.square;
@@ -53,13 +47,4 @@ public class GoalView extends LinearLayout implements Tile {
         remainGoal.setText(""+goal.number);
     }
 
-    @Override
-    public void draw(@NonNull Canvas canvas, int side) {
-
-    }
-
-    @Override
-    public boolean setSelect(boolean selected) {
-        return false;
-    }
 }

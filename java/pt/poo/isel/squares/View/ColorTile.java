@@ -20,6 +20,8 @@ class ColorTile extends SquareView {
 
     @Override
     public void draw(@NonNull Canvas canvas, int side) {
+        if(square.getColor()==-1)
+            System.out.println(color);
         color = COLORS[square.getColor()];
         paint.setColor(color);
         RectF r = new RectF(0, 0, side, side);
