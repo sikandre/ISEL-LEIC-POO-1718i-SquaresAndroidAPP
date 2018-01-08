@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ok">Ok</string>
+    <string name="app_name" translatable="false">Quadrados</string>
+    <string name="gameOver" translatable="false">Fim de jogo</string>
+    <string name="contGame" translatable="false">Continuar</string>
+    <string name="yes" translatable="false">Sim</string>
+    <string name="no" translatable="false">Não</string>
+    <string name="nolevel" translatable="false">Sem niveis</string>
+    <string name="win" translatable="false">Ganhou</string>
+    <string name="lost" translatable="false">Perdeu</string>
+    <string name="exit" translatable="false">Adeus</string>
+    <string name="moves" translatable="false">Jogadas</string>
+    <string name="loadError" translatable="false">Erro ao carregar ficheiro</string>
+    <string name="inFile" translatable="false">no ficheiro</string>
+</resources>

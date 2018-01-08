@@ -94,7 +94,7 @@ public class SquaresApp extends Activity {
                     updateGoals();
                     if (model.isOver()) {
                         if(!winGame()){
-                            gameOver("You lost");
+                            gameOver(getString(R.string.lost));
                         }
                         else
                             continueGame();
@@ -121,9 +121,9 @@ public class SquaresApp extends Activity {
     private void gameOver(String txt) {
         new AlertDialog.Builder(this,2)
                 .setCancelable(false)
-                .setTitle("Game Over")
+                .setTitle(R.string.gameOver)
                 .setMessage(txt)
-                .setPositiveButton("Ok", (DialogInterface,i)->{
+                .setPositiveButton(R.string.ok, (DialogInterface, i)->{
                     finish();
                 })
                 .show();
@@ -131,14 +131,14 @@ public class SquaresApp extends Activity {
 
     private void continueGame() {
         new AlertDialog.Builder(this,2)
-                .setTitle("Continue Game")
+                .setTitle(R.string.contGame)
                 .setCancelable(false)
-                .setPositiveButton("Yes",(DialogInterface,i)->{
+                .setPositiveButton(R.string.yes,(DialogInterface, i)->{
                     grid.postDelayed(action, 1500);
                     initBoard();
                 })
-                .setNegativeButton("No",(DialogInterface,i)->{
-                    message("Bye");
+                .setNegativeButton(R.string.no,(DialogInterface, i)->{
+                    message(getString(R.string.exit));
                     finish();
                 })
                 .show();
@@ -154,7 +154,7 @@ public class SquaresApp extends Activity {
         int width = grid.getWidthInTiles();
 
         if(!loadLevel(++level)) {
-            gameOver("no more levels");
+            gameOver(getString(R.string.nolevel));
         }
         updateMoves(model.getTotalMoves());
         setGoals();
@@ -189,10 +189,10 @@ public class SquaresApp extends Activity {
             model.setListener(listener);                      // Set the listener of modifications
             return true;
         } catch (FileNotFoundException | InputMismatchException e) {
-            System.out.println("Error loading file \"" + LEVELS_FILE + "\":\n" + e.getMessage());
+            System.out.println(getString(R.string.loadError) + LEVELS_FILE + "\":\n" + e.getMessage());
             return false;
         } catch (Loader.LevelFormatException e) {
-            System.out.println(e.getMessage() + " in file \"" + LEVELS_FILE + "\"");
+            System.out.println(e.getMessage() + getString(R.string.inFile) + LEVELS_FILE + "\"");
             System.out.println(" " + e.getLineNumber() + ": " + e.getLine());
             return false;
         } catch (IOException e) {
@@ -205,7 +205,7 @@ public class SquaresApp extends Activity {
 
     private boolean winGame () {
         if (model.isWinner()) {
-            message("Winner");
+            message(getString(R.string.win));
             return true;
         }
         return false;

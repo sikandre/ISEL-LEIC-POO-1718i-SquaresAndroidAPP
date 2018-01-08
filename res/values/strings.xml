@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">Squares</string>
+    <string name="app_name" translatable="false">Squares</string>
+    <string name="gameOver" translatable="false">Game Over</string>
+    <string name="contGame" translatable="false">Continue Game</string>
+    <string name="yes" translatable="false">Yes</string>
+    <string name="no" translatable="false">No</string>
+    <string name="nolevel" translatable="false">no more levels</string>
+    <string name="win" translatable="false">Winner</string>
+    <string name="lost" translatable="false">You Lost</string>
+    <string name="ok">OK</string>
+    <string name="exit" translatable="false">Bye</string>
+    <string name="moves" translatable="false">Moves</string>
+    <string name="loadError" translatable="false">Error loading file \"</string>
+    <string name="inFile" translatable="false">in file \"</string>
 </resources>
