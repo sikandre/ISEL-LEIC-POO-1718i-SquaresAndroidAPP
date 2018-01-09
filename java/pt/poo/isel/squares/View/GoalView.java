@@ -1,18 +1,12 @@
 package pt.poo.isel.squares.View;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.support.annotation.NonNull;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import pt.poo.isel.squares.R;
 import pt.poo.isel.squares.SquaresApp;
 import pt.poo.isel.squares.model.Squares;
 import pt.poo.isel.squares.model.square.Square;
-import pt.poo.isel.tile.Tile;
 import pt.poo.isel.tile.TileView;
 
 public class GoalView extends LinearLayout {
@@ -36,7 +30,7 @@ public class GoalView extends LinearLayout {
         remainGoal.setText(" "+g.number+" ");
         remainGoal.setGravity(Gravity.TOP|Gravity.CENTER);
 
-        LayoutParams params = new LayoutParams(93,93);
+        LayoutParams params = new LayoutParams(93,93); //missing side???
         params.setMargins(0,0,16,0);
 
         addView(square,params);

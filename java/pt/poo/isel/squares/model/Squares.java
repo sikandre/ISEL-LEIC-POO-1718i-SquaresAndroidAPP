@@ -180,24 +180,24 @@ public class Squares {
 
         out.write(getTotalMoves());
 
-        byte [] array = new byte[HEIGHT*WIDTH];
+        byte [] saveGrid = new byte[HEIGHT*WIDTH];
         int idx = 0;
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT ; j++) {
                 Square s = grid[i][j];
-                if (idx < array.length) {
-                    if(s.getClass().equals(HorizotalSquare.class)) array[idx] = 'H';
-                    if(s.getClass().equals(VerticalSquare.class)) array[idx] = 'V';
-                    if(s.getClass().equals(BombSquare.class)) array[idx] = 'B';
-                    if(s.getClass().equals(EmptySquare.class)) array[idx] = 'X';
-                    if(s.getClass().equals(jokerSquare.class)) array[idx] = 'J';
-                    if(s.getClass().equals(ColorSquare.class)) array[idx] = (byte)s.getColor();
+                if (idx < saveGrid.length) {
+                    if(s.getClass().equals(HorizotalSquare.class)) saveGrid[idx] = 'H';
+                    if(s.getClass().equals(VerticalSquare.class)) saveGrid[idx] = 'V';
+                    if(s.getClass().equals(BombSquare.class)) saveGrid[idx] = 'B';
+                    if(s.getClass().equals(EmptySquare.class)) saveGrid[idx] = 'X';
+                    if(s.getClass().equals(jokerSquare.class)) saveGrid[idx] = 'J';
+                    if(s.getClass().equals(ColorSquare.class)) saveGrid[idx] = (byte)s.getColor();
 
                     idx++;
                 }
             }
         }
-        out.write(array);
+        out.write(saveGrid);
     }
 
     //--------------Load State---------------

@@ -243,11 +243,7 @@ public class SquaresApp extends Activity {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-           /* try {*/
                 model.save(out);
-            /*} catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }*/
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
